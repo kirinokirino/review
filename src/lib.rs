@@ -1,8 +1,8 @@
-use eyre;
+
 use std::time::{Duration, SystemTime};
 
 #[derive(Debug, Clone, PartialEq)]
-struct Review {
+pub struct Review {
     last_review: Option<SystemTime>,
     next_review: SystemTime,
     ease: f32,
@@ -28,7 +28,7 @@ impl Review {
             match now.duration_since(last_review) {
                 Ok(duration) => duration,
                 Err(error) => {
-                    eprintln!("Last review was in the future! {:?}", error);
+                    eprintln!("Last review was in the future! {error:?}");
                     Duration::from_secs(30)
                 }
             }
@@ -118,7 +118,7 @@ mod tests {
         let Review {
             last_review,
             next_review,
-            ease,
+            ease: _,
         } = review;
         // last review was just now.
         assert!(
@@ -151,7 +151,7 @@ mod tests {
         let Review {
             last_review,
             next_review,
-            ease,
+            ease: _,
         } = review;
         // last review was just now.
         assert!(
